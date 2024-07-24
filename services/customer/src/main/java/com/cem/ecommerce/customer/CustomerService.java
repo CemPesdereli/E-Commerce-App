@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static java.lang.String.format;
 
 @Service
@@ -46,5 +48,9 @@ public class CustomerService {
             customer.setAddress(request.address());
         }
 
+    }
+
+    public List<CustomerResponse> findAllCustomers() {
+        return null;
     }
 }
