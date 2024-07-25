@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
@@ -51,6 +52,26 @@ public class CustomerService {
     }
 
     public List<CustomerResponse> findAllCustomers() {
-        return null;
+        return repository.findAll()
+                .stream()
+                .map(mapper::toCustomerResponse)
+                .collect(Collectors.toList());
+    }
+
+    public Boolean existsById(String customerId) {
+
+        return repository.findById(customerId)
+                .isPresent();
+    }
+
+    public CustomerResponse findById(String customerId) {
+
+        return repository.findById(customerId)
+                .map(mapper::toCustomerResponse)
+                .orElseThrow(() -> new CustomerNotFoundException(format("No customer found with the provided ID:: %s",customerId)));
+    }
+
+    public void deleteCustomer(String customerId) {
+        repository.deleteById(customerId);
     }
 }
