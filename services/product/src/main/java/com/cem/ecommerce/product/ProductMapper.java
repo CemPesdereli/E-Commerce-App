@@ -38,7 +38,7 @@ public class ProductMapper {
                 product.getName(),
                 product.getDescription(),
                 product.getPrice(),
-                product.getAvailableQuantity()
+                quantity
         );
     }
 }
