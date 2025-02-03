@@ -31,7 +31,7 @@ public class Order {
 
     private String reference;
 
-    private BigDecimal totalAmount;
+    private BigDecimal   totalAmount;
 
     @Enumerated(STRING)
     private PaymentMethod paymentMethod;

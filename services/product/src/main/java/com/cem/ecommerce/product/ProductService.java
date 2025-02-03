@@ -44,7 +44,7 @@ public class ProductService {
             var product = storedProducts.get(i);
             var productRequest = storedRequest.get(i);
             if(product.getAvailableQuantity()<productRequest.quantity()){
-                throw new ProductPurchaseException("Insufficient stock quantity for product with ID:: "+productRequest.productId());
+                throw new ProductPurchaseException("Insufficient stock quantity for product with ID:: "+productRequest.productId()); // test this with insufficient stock
             }
             var newAvailableQuantity = product.getAvailableQuantity() - productRequest.quantity();
             product.setAvailableQuantity(newAvailableQuantity);
