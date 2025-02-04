@@ -6,6 +6,8 @@ import com.cem.ecommerce.kafka.OrderConfirmation;
 import com.cem.ecommerce.kafka.OrderProducer;
 import com.cem.ecommerce.orderline.OrderLineRequest;
 import com.cem.ecommerce.orderline.OrderLineService;
+import com.cem.ecommerce.payment.PaymentClient;
+import com.cem.ecommerce.payment.PaymentRequest;
 import com.cem.ecommerce.product.ProductClient;
 import com.cem.ecommerce.product.PurchaseRequest;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,6 +23,7 @@ public class OrderService {
 
     private final CustomerClient customerClient;
     private final ProductClient productClient;
+    private final PaymentClient paymentClient;
 
     private final OrderProducer orderProducer;
 
@@ -58,6 +61,15 @@ public class OrderService {
         }
 
         // todo start payment process
+
+        var paymentRequest = new PaymentRequest(
+                request.amount(),
+                request.paymentMethod(),
+                order.getId(),
+                order.getReference(),
+                customer
+        );
+        paymentClient.requestOrderPayment(paymentRequest);
 
         //send the order confirmation --> notification - microservice(kafka)
         orderProducer.sendOrderConfirmation(
