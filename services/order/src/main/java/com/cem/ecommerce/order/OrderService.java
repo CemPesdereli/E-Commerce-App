@@ -13,6 +13,7 @@ import com.cem.ecommerce.product.PurchaseRequest;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +32,7 @@ public class OrderService {
     private final OrderMapper mapper;
     private final OrderLineService orderLineService;
 
+    @Transactional
     public Integer createOrder(OrderRequest request) {
         // check customer --> customer - microservice (OpenFeign)
 
@@ -81,6 +83,7 @@ public class OrderService {
                         purchasedProducts
                 )
         );
+
 
         return order.getId();
     }
